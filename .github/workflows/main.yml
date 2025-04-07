@@ -17,13 +17,19 @@ jobs:
         # 安裝 .NET Framework 4.8 SDK
         choco install netfx-4.8
 
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v2
+
     - name: Restore NuGet packages
       run: |
         nuget restore MyApp.sln  # 替換成你的解決方案檔案路徑
 
     - name: Build the .NET Framework solution
       run: |
-        MSBuild MyApp.sln /p:Configuration=Release  # 使用 MSBuild 編譯 .NET Framework 項目
+        msbuild.exe MyApp.sln /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl="../_build"
 
     - name: Publish .NET Framework Project
       run: |
@@ -34,4 +40,4 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./release  # 根據需要指定發布目錄
+        publish_dir: ../_build
