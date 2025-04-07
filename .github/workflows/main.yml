@@ -2,7 +2,7 @@ name: .NET Framework Build and Deploy
 
 on:
   push:
-    branches: [ master ]  # 這裡設置了主分支，根據需要修改
+    branches: [ main ]  # 這裡設置了主分支，根據需要修改
 
 jobs:
   build:
