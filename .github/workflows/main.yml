@@ -37,7 +37,7 @@ jobs:
         MSBuild MyApp.sln /p:Configuration=Release /p:OutputPath=release
 
     - name: Commit to GitHub Pages (if needed)
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@v3   #Settings→Actions→General→Workflowpermissions中，確保GITHUB_TOKEN具有write權限，而不是僅有read權限。
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ../_build
