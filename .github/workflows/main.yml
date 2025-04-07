@@ -29,7 +29,7 @@ jobs:
 
     - name: Build the .NET Framework solution
       run: |
-        msbuild.exe MyApp.sln /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl="../_build"
+        msbuild.exe MyApp.sln /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl=release"
 
     - name: Publish .NET Framework Project
       run: |
@@ -40,4 +40,4 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3   #Settings→Actions→General→Workflowpermissions中，確保GITHUB_TOKEN具有write權限，而不是僅有read權限。
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ../_build
+        publish_dir: ./release
