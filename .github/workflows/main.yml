@@ -1,0 +1,37 @@
+name: .NET Framework Build and Deploy
+
+on:
+  push:
+    branches: [ master ]  # 這裡設置了主分支，根據需要修改
+
+jobs:
+  build:
+    runs-on: windows-latest  # 使用 Windows runner，因為 .NET Framework 需要在 Windows 環境中編譯和運行
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET Framework
+      run: |
+        # 安裝 .NET Framework 4.8 SDK
+        choco install netfx-4.8
+
+    - name: Restore NuGet packages
+      run: |
+        nuget restore MyApp.sln  # 替換成你的解決方案檔案路徑
+
+    - name: Build the .NET Framework solution
+      run: |
+        MSBuild MyApp.sln /p:Configuration=Release  # 使用 MSBuild 編譯 .NET Framework 項目
+
+    - name: Publish .NET Framework Project
+      run: |
+        # 如果需要部署到指定目錄或其他操作，請在這裡添加步驟
+        MSBuild MyApp.sln /p:Configuration=Release /p:OutputPath=release
+
+    - name: Commit to GitHub Pages (if needed)
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./release  # 根據需要指定發布目錄
